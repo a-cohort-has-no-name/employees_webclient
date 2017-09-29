@@ -1,0 +1,6 @@
+<h1>Employees</h1>
+
+<% @employees.each do |employee| %>
+  <h2>Full Name: <%= employee['full_name'] %></h2>
+  <h3>Email: <%= employee['email'] %></h3>
+<% end %>
