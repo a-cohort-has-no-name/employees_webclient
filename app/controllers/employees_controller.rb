@@ -1,12 +1,12 @@
 class EmployeesController < ApplicationController
   def index
     # @employees = Employee.all
-    @employees = Unirest.get("http://localhost:3000/api/v2/employees").body #array
+    @employees = Unirest.get("#{ENV['API_URL']}").body #array
   end
 
   def show
     # @employee = Employee.find_by(id: params[:id])
-    @employee = Unirest.get("http://localhost:3000/api/v2/employees/#{params[:id]}").body #hash
+    @employee = Unirest.get("#{ENV['API_URL']}/#{params[:id]}").body #hash
   end
 
   def new
@@ -15,7 +15,22 @@ class EmployeesController < ApplicationController
 
   def create
     # @employee = Employee.create(first_name:)
-    @employee = Unirest.post("http://localhost:3000/api/v2/employees", headers: {"Accept" => "application/json"}, parameters: {first_name: params[:first_name], last_name: params[:last_name], email: params[:email]}).body
+    @employee = Unirest.post("#{ENV['API_URL']}", headers: {"Accept" => "application/json"}, parameters: {first_name: params[:first_name], last_name: params[:last_name], email: params[:email]}).body
     redirect_to "/employees/#{@employee['id']}"
+  end
+
+  def edit
+    @employee = Unirest.get("#{ENV['API_URL']}/#{params[:id]}").body
+  end
+
+  def update
+    @employee = Unirest.get("#{ENV['API_URL']}/#{params[:id]}").body
+    Unirest.patch("#{ENV['API_URL']}/#{@employee['id']}", headers: {"Accept" => "application/json"}, parameters: {first_name: params[:first_name], last_name: params[:last_name], email: params[:email]}).body
+    redirect_to "/employees/#{@employee['id']}"
+  end
+
+  def destroy
+    Unirest.delete("#{ENV['API_URL']}/#{params[:id]}")
+    redirect_to '/employees'
   end
 end
