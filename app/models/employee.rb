@@ -17,7 +17,7 @@ class Employee
 
   def self.all
     employees = []
-    api_employees = Unirest.get("#{ENV['API_URL']}").body
+    api_employees = Unirest.get("#{ENV['API_URL']}", headers: {"Authorization" => "Token token=#{ENV['API_KEY']}", "X-User-Email" => "#{ENV['API_EMAIL']}"}).body
     api_employees.each do |api_employee|
       employees << Employee.new(api_employee)
     end
