@@ -10,4 +10,9 @@ class Employee
     @addresses = options_hash['addresses']
   end
 
+  def self.find(id)
+    employee = Unirest.get("#{ENV['API_URL']}/#{id}").body
+    Employee.new(employee)
+  end
+
 end

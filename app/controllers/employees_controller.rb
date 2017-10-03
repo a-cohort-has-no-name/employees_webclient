@@ -1,17 +1,16 @@
 class EmployeesController < ApplicationController
   def index
-    # @employees = Employee.all
-    @employees = []
-    api_employees = Unirest.get("#{ENV['API_URL']}").body #array
-    api_employees.each do |api_employee|
-      @employees << Employee.new(api_employee)
-    end
+    @employees = Employee.all
+    # @employees = []
+    # api_employees = Unirest.get("#{ENV['API_URL']}").body #array
+    # api_employees.each do |api_employee|
+    #   @employees << Employee.new(api_employee)
+    # end
 
   end
 
   def show
-    # @employee = Employee.find_by(id: params[:id])
-    @employee = Employee.new(Unirest.get("#{ENV['API_URL']}/#{params[:id]}").body) #hash
+    @employee = Employee.find(params[:id])
   end
 
   def new
