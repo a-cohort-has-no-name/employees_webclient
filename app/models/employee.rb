@@ -15,4 +15,22 @@ class Employee
     Employee.new(employee)
   end
 
+  def self.all
+    employees = []
+    api_employees = Unirest.get("#{ENV['API_URL']}").body
+    api_employees.each do |api_employee|
+      employees << Employee.new(api_employee)
+    end
+    employees
+  end
+
+  def self.create(first_name, last_name, email)
+    employee = Unirest.post("#{ENV['API_URL']}", headers: {"Accept" => "application/json"}, parameters: {first_name: first_name, last_name: last_name, email: email}).body
+    Employee.new(employee)
+  end
+
+  def destroy
+    Unirest.delete("#{ENV['API_URL']}/#{id}")
+  end
+
 end

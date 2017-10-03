@@ -1,12 +1,6 @@
 class EmployeesController < ApplicationController
   def index
     @employees = Employee.all
-    # @employees = []
-    # api_employees = Unirest.get("#{ENV['API_URL']}").body #array
-    # api_employees.each do |api_employee|
-    #   @employees << Employee.new(api_employee)
-    # end
-
   end
 
   def show
@@ -18,9 +12,8 @@ class EmployeesController < ApplicationController
   end
 
   def create
-    # @employee = Employee.create(first_name:)
-    @employee = Unirest.post("#{ENV['API_URL']}", headers: {"Accept" => "application/json"}, parameters: {first_name: params[:first_name], last_name: params[:last_name], email: params[:email]}).body
-    redirect_to "/employees/#{@employee['id']}"
+    @employee = Employee.create(params[:first_name], params[:last_name], params[:email])
+    redirect_to "/employees/#{@employee.id}"
   end
 
   def edit
@@ -34,7 +27,8 @@ class EmployeesController < ApplicationController
   end
 
   def destroy
-    Unirest.delete("#{ENV['API_URL']}/#{params[:id]}")
+    employee = Employee.find(params[:id])
+    employee.destroy
     redirect_to '/employees'
   end
 end
