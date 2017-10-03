@@ -1,7 +1,12 @@
 class EmployeesController < ApplicationController
   def index
     # @employees = Employee.all
-    @employees = Unirest.get("#{ENV['API_URL']}").body #array
+    @employees = []
+    api_employees = Unirest.get("#{ENV['API_URL']}").body #array
+    api_employees.each do |api_employee|
+      @employees << Employee.new(api_employee)
+    end
+
   end
 
   def show
