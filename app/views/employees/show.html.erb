@@ -1,5 +1,5 @@
-<h1><%= @employee['full_name'] %></h1>
-<h2><%= @employee['email']%></h2>
-<h3>Birthday: <%= @employee['birthday'] %></h3>
+<h1><%= @employee.full_name %></h1>
+<h2><%= @employee.email %></h2>
+<h3>Birthday: <%= @employee.birthday %></h3>
 
-<%= link_to "Delete", "/employees/#{@employee['id']}", method: :delete %>
+<%= link_to "Delete", "/employees/#{@employee.id}", method: :delete %>

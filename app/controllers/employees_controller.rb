@@ -6,7 +6,7 @@ class EmployeesController < ApplicationController
 
   def show
     # @employee = Employee.find_by(id: params[:id])
-    @employee = Unirest.get("#{ENV['API_URL']}/#{params[:id]}").body #hash
+    @employee = Employee.new(Unirest.get("#{ENV['API_URL']}/#{params[:id]}").body) #hash
   end
 
   def new
